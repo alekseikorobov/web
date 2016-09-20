@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<style>
+	#cl{
+		position:absolute;
+		width: 100px;
+		height: 100px;
+		background: black;
+		border-radius: 50%;
+	}
+	</style>
+	<script>
+onload = function() {
+	var element = document.getElementById('cl');
+	var isMouseDownAt = false;
+    var mouseOffset;
+	element.onmousedown = function (e) {
+		//возвращает размер элемента и его позицию относительно окна.
+		var docPos	= element.getBoundingClientRect(); 
+		// запомнить, с каких относительных координат начался перенос
+		mouseOffset = {x:e.pageX - docPos.left, y:e.pageY - docPos.top}
+		isMouseDownAt = true;
+		return false
+	}
+	document.onmousemove = function(e){
+		if(isMouseDownAt) {
+			element.style.top =  e.pageY - mouseOffset.y +'px'
+			element.style.left = e.pageX - mouseOffset.x +'px'
+		}
+		return false
+	}
+	document.onmouseup = function (){ isMouseDownAt = false; }
+}
+	</script>
+</head>
+<body>
+	
+	<div id="cl">
+	</div>
+</body>
+</html>
